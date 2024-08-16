@@ -260,11 +260,11 @@ void BF4Menu::ESP()
 
 void GUI::TextCentered(const char* pText)
 {
-    ImVec2 textSize = ImGui::CalcTextSize(pText);
-    ImVec2 windowSize = ImGui::GetWindowSize();
-    ImVec2 textPos = ImVec2((windowSize.x - textSize.x) * 0.5f, (windowSize.y - textSize.y) * 0.5f);
-    ImGui::SetCursorPos(textPos);
-    ImGui::Text("%s", pText);
+    float windowWidth = ImGui::GetWindowSize().x;
+    float textWidth = ImGui::CalcTextSize(pText).x;
+    float posX = (windowWidth - textWidth) * 0.5f;
+    ImGui::SetCursorPosX(posX);
+    ImGui::Text(std::string(pText).c_str());
 }
 
 //  @ATTN: max buffer is 256chars
@@ -302,19 +302,6 @@ void GUI::DrawTextCentered(ImVec2 pos, ImColor color, const char* pText, float f
     ImVec2 textPosition = ImVec2(pos.x - (textSize * 0.5f), pos.y);
     DrawText_(textPosition, color, pText, fontSize);
 }
-
-//  void GUI::DrawTextCentered(ImVec2 pos, ImColor color, const char* pText, float fontSize)
-//  {
-//      std::string txt(pText);
-//  
-//      ImVec2 textSize = ImGui::CalcTextSize(pText);
-//  
-//      const char* start = txt.c_str();
-//      const char* end = start + txt.size();
-//  
-//      ImVec2 textPos(pos.x - (textSize.x * .5f), pos.y);
-//      DrawText_(textPos, color, pText, fontSize);
-//  }
 
 //  @ATTN: max buffer is 256chars
 void GUI::DrawTextCenteredf(ImVec2 pos, ImColor color, const char* pText, float fontSize, ...)
