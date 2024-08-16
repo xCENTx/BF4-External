@@ -19,6 +19,11 @@ DxWindow::DxWindow()
         return;
     }
 
+#if STREAM_PROOF
+    bStreamproof = true;
+    SetWindowDisplayAffinity(m_hwnd, WDA_EXCLUDEFROMCAPTURE);
+#endif
+
     ::ShowWindow(m_hwnd, SW_SHOWDEFAULT);
     ::UpdateWindow(m_hwnd);
 
@@ -28,6 +33,11 @@ DxWindow::DxWindow()
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;        // Enable Gamepad Controls
     io.IniFilename = NULL;                                      // Disable Ini File
+
+    ImGui::StyleColorsDark();
+    ImGuiStyle& style = ImGui::GetStyle();
+    style.WindowTitleAlign = ImVec2(.5f, .5f);
+
     ImGui_ImplWin32_Init(m_hwnd);
     ImGui_ImplDX11_Init(m_pd3dDevice, m_pd3dDeviceContext);
 }
@@ -124,6 +134,12 @@ void DxWindow::SetWindowFocus(HWND window)
 {
     SetForegroundWindow(window);
     SetActiveWindow(window);
+}
+
+void DxWindow::ToggleStreamProof()
+{
+    DWORD flag = bStreamproof ? WDA_EXCLUDEFROMCAPTURE : WDA_NONE;
+    SetWindowDisplayAffinity(m_hwnd, flag);
 }
 
 ImVec2 DxWindow::GetScreenSize() { return m_szScreen; }

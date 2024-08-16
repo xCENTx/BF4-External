@@ -2,6 +2,7 @@
 #define PCH_H
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 #define _USE_MATH_DEFINES
+#define STREAM_PROOF true				//	set to true to initialize DXWindow as Stream Proof
 
 // STANDARD LIBRARIES
 #include <Windows.h>
@@ -32,6 +33,9 @@
 #include "../libs/ImGui/imgui_internal.h"
 #include "../libs/ImGui/imgui_Impl_dx11.h"
 #include "../libs/ImGui/imgui_Impl_Win32.h"
+
+//	Battlefield 4 Helper
+#include "../libs/Game/BF4_Functions.h"
 
 using namespace std::chrono_literals;
 

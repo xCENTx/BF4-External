@@ -41,38 +41,27 @@ void Menu::MainMenu()
     ImGui::Separator();
     ImGui::Spacing();
 
-    static int BytesPerLine{ 4 };
-    static int BytesSpacing{ 2 };
-    static unsigned int MemScanReadSize{ 0x1000 };
-    static unsigned int MemScanStarAddress{ 0x0 };
-    ImGui::InputInt("##MEMSCAN_START", (int*)&MemScanStarAddress, 0, 0, ImGuiInputTextFlags_CharsHexadecimal);
-    ImGui::SameLine();
-    ImGui::InputInt("##MEMSCAN_SIZE", (int*)&MemScanReadSize, 0, 0, ImGuiInputTextFlags_CharsHexadecimal);
-    ImGui::BeginChild("MemoryScanner", ImVec2(ImGui::GetContentRegionAvail()), ImGuiChildFlags_Border);
+    ImGui::BeginChild("GameInfo", ImVec2(ImGui::GetContentRegionAvail()), ImGuiChildFlags_Border);
     {
-        int pad{ 0 };
-        for (int i = 0; i < MemScanReadSize; i += BytesPerLine)
+        ImGui::Text("pGame: 0x%llX" , BF4::GetGame());
+        auto pClient = BF4::GetLocalClient();
+        ImGui::Text("pClient: 0x%llX", pClient);
+        if (pClient)
         {
-            static unsigned long long base = reinterpret_cast<unsigned long long>(GetModuleHandle(0));
-            if (!base)
+            ImGui::Text("TeamID: %d", BF4::GetClientTeamID(pClient));
+            ImGui::Text("Name: %s", BF4::GetClientName(pClient).c_str());
+
+            std::vector<__int64> outClients;
+            BF4::GetClientArray(&outClients);
+            ImGui::Text("Clients: %d", outClients.size());
+
+            __int64 pSoldier = BF4::GetClientSoldier(pClient);
+            if (pSoldier)
             {
-                ImGui::Text("Failed to get module base address.");
-                break;
+                BF4::Vector3 pos = BF4::GetSoldierPos(pSoldier);
+                ImGui::Text("HEALTH: %.0f", BF4::GetHealthPercent(pSoldier));
+                ImGui::Text("POS: { %.0f, %.0f, %.0f }", pos.x, pos.y, pos.z);
             }
-        
-            ImGui::Text("%p: ", base + i);
-            ImGui::SameLine();
-            for (int j = 0; j < BytesPerLine; j++)
-            {
-                unsigned long long addr = (base + i + j);
-                if (addr > 0)
-                    ImGui::Text("0x%02X ", *(unsigned __int8*)addr);
-                else
-                    ImGui::Text("?? ");
-        
-                ImGui::SameLine();
-            }
-            ImGui::NewLine();
         }
     }
     ImGui::EndChild();
