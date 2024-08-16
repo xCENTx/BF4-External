@@ -19,7 +19,7 @@ int main()
 	
 	//	Initialize Menu
 	///	
-	g_Menu = std::make_unique<Menu>();
+	g_Menu = std::make_unique<BF4Menu>();
 
 	static int LastTick = 0;
 	while (g_Menu->bRunning)

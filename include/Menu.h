@@ -11,6 +11,9 @@ public:
 	bool bShowStyleEditor{ false };
 
 public:
+
+
+public:
 	void Draw();
 	void MainMenu();
 	void SHROUD();
@@ -27,13 +30,22 @@ public:
 private:
 	DxWindow::SOverlay elements;
 
-}; inline std::unique_ptr<Menu> g_Menu;
+}; 
 
+class BF4Menu : public Menu
+{
+public:
+	bool bESP;
 
-#define IM_COL32_RED ImColor(1.0f, 0.0f, 0.0f, 1.0f)
-#define IM_COL32_BLUE ImColor(0.0f, 1.0f, 0.0f, 1.0f)
-#define IM_COL32_GREEN ImColor(0.0f, 0.0f, 1.0f, 1.0f)
-#define IM_COL32_YELLOW ImColor(1.0f, 1.0f, 0.0f, 1.0f)
+public:
+	void ESP();
+
+}; inline std::unique_ptr<BF4Menu> g_Menu;
+
+#define IM_COL32_RED		 ImColor(1.0f, 0.0f, 0.0f, 1.0f)
+#define IM_COL32_GREEN		 ImColor(0.0f, 1.0f, 0.0f, 1.0f)
+#define IM_COL32_BLUE		 ImColor(0.0f, 0.0f, 1.0f, 1.0f)
+#define IM_COL32_YELLOW		 ImColor(1.0f, 1.0f, 0.0f, 1.0f)
 class GUI
 {
 public:

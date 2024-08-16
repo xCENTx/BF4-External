@@ -48,8 +48,8 @@ namespace BF4
 	{
 		if (!teamID)
 			teamID = GetClientTeamID(GetLocalClient());
-		
-		return GetClientTeamID(pClient) != teamID;
+		__int32 cTeam = GetClientTeamID(pClient);
+		return cTeam == teamID;
 	}
 	
 	__int64 GetClientByIndex(__int8 index)

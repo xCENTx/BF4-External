@@ -312,7 +312,7 @@ namespace BF4
 		Vector3& operator/=(const Vector3& other) { x /= other.x; y /= other.y; z /= other.z; return *this; }
 
 
-		bool IsValid() { return x == 0.f && y == 0.f; z == 0.f; }
+		bool IsValid() { return x == 0.f && y == 0.f && z == 0.f; }
 		float DotProduct(const Vector3& other) { return (x * other.x) + (y * other.y) + (z * other.z); }
 		float MagnitudeSqr() { return DotProduct(*this); }
 		float Magnitude() { return sqrt(DotProduct(*this)); }

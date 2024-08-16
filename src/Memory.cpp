@@ -10,9 +10,6 @@ Memory::~Memory()
 {
 	if (m_hProc != INVALID_HANDLE_VALUE)
 		CloseHandle(m_hProc);
-
-	if (m_hWnd != INVALID_HANDLE_VALUE)
-		CloseHandle(m_hWnd);
 }
 
 DWORD Memory::GetPID() { return m_PID; }
